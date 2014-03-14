@@ -1,9 +1,6 @@
-package test;
+package examples;
 
-import javassist.CtClass;
 import uninvitedvisitor.UninvitedVisitor;
-
-import java.util.Random;
 
 public class Test {
     public static class ToString extends UninvitedVisitor<Exp> {
