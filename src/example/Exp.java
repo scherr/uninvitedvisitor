@@ -1,4 +1,4 @@
-package examples;
+package example;
 
 public abstract class Exp {
     public static class IntExp extends Exp {
