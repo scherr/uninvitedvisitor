@@ -21,6 +21,8 @@ public class Test {
 
             res = "(" + l + " + " + r + ")";
         }
+
+        public void visit(Exp at) { }
     }
 
     public static class Evaluator extends UninvitedVisitor<Exp> implements Exp.Visitor {
@@ -41,6 +43,8 @@ public class Test {
 
             res = l + r;
         }
+
+        public void visit(Exp at) { }
     }
 
     public static void main(String args[]) throws InterruptedException {
