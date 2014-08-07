@@ -3,7 +3,7 @@ Uninvited Visitor
 
 An abstract visitor whose implementation can invite itself at a "host".
 This is just a simple implementation of a so-called "runabout", a variety of a reflective visitor, or "walkabout".
-Instead of runtime reflection a "runabout" uses runtime code generation to create a specialized dispatching code.
+Instead of runtime reflection, a "runabout" uses runtime code generation to create specialized dispatching code.
 
 
 Dependencies
