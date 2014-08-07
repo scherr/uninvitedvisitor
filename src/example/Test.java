@@ -3,7 +3,7 @@ package example;
 import uninvitedvisitor.UninvitedVisitor;
 
 public class Test {
-    public static class ToString extends UninvitedVisitor<Exp> {
+    public static class Printer extends UninvitedVisitor<Exp> implements Exp.Visitor {
         String res;
 
         public void visit(Exp.IntExp host) {
@@ -11,9 +11,11 @@ public class Test {
         }
 
         public void visit(Exp.AddExp host) {
+            // host.left.accept(this);
             this.inviteYourself(host.left);
             String l = res;
 
+            // host.right.accept(this);
             this.inviteYourself(host.right);
             String r = res;
 
@@ -21,7 +23,7 @@ public class Test {
         }
     }
 
-    public static class ToInt extends UninvitedVisitor<Exp> implements Exp.Visitor {
+    public static class Evaluator extends UninvitedVisitor<Exp> implements Exp.Visitor {
         int res;
 
         public final void visit(Exp.IntExp host) {
@@ -49,7 +51,8 @@ public class Test {
             e = new Exp.AddExp(e, new Exp.IntExp(i));
         }
 
-        ToString visitor = new ToString();
+        Printer visitor = new Printer();
+        // Evaluator visitor = new Evaluator();
 
         long start;
         long end;
@@ -68,7 +71,8 @@ public class Test {
             visitor.inviteYourself(e);
         }
         end = System.nanoTime();
-        System.out.println(visitor.res);
         System.out.println(end - start);
+
+        System.out.println(visitor.res);
     }
 }

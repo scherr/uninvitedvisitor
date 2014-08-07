@@ -61,7 +61,7 @@ public abstract class UninvitedVisitor<T> {
                 CtConstructor cnstr = CtNewConstructor.defaultConstructor(c);
                 c.addConstructor(cnstr);
 
-                CtMethod m = CtNewMethod.make(CtClass.voidType, "dispatch", new CtClass[]{cp.get(UninvitedVisitor.class.getName()), Type.OBJECT.getCtClass()}, null, code.toString(), c);
+                CtMethod m = CtNewMethod.make(CtClass.voidType, "dispatch", new CtClass[]{ cp.get(UninvitedVisitor.class.getName()), Type.OBJECT.getCtClass() }, null, code.toString(), c);
                 c.addMethod(m);
 
                 dispatcher = ((Class<Dispatcher<T>>) c.toClass()).newInstance();
