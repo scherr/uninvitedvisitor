@@ -1,6 +1,8 @@
 Uninvited Visitor
 ===
 
+Maximilian Scherr, 2013-
+
 An abstract visitor whose implementation can invite itself at a "host".
 This is just a simple implementation of a so-called "runabout", a variety of a reflective visitor, or "walkabout".
 Instead of runtime reflection, a "runabout" uses runtime code generation to create specialized dispatching code.
