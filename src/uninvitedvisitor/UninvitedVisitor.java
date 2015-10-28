@@ -12,12 +12,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class UninvitedVisitor<T> {
     final private static Comparator<Method> methodComparator = new Comparator<Method>() {
         public int compare(Method m0, Method m1) {
-            Class[] paramTypes0 = m0.getParameterTypes();
+            Class<?>[] paramTypes0 = m0.getParameterTypes();
             if (paramTypes0.length != 1) {
                return 1;
             }
 
-            Class[] paramTypes1 = m1.getParameterTypes();
+            Class<?>[] paramTypes1 = m1.getParameterTypes();
             if (paramTypes1.length != 1) {
                return -1;
             }
@@ -32,11 +32,11 @@ public abstract class UninvitedVisitor<T> {
 
     private final Dispatcher<T> dispatcher;
 
-    private static ConcurrentHashMap<Class, Dispatcher> dispatcherMap = new ConcurrentHashMap<Class, Dispatcher>();
+    private static ConcurrentHashMap<Class<?>, Dispatcher<?>> dispatcherMap = new ConcurrentHashMap<>();
 
     protected UninvitedVisitor() {
-        Class clazz = this.getClass();
-        Dispatcher<T> dispatcher = dispatcherMap.get(clazz);
+        Class<?> clazz = this.getClass();
+        Dispatcher<T> dispatcher = (Dispatcher<T>) dispatcherMap.get(clazz);
         if (dispatcher == null) {
             Method[] methods = clazz.getMethods();
             Arrays.sort(methods, methodComparator);
@@ -58,6 +58,7 @@ public abstract class UninvitedVisitor<T> {
             try {
                 ClassPool cp = ClassPool.getDefault();
                 CtClass c = cp.makeClass(Dispatcher.class.getName() + dispatcherMap.size(), cp.get(Dispatcher.class.getName()));
+
                 CtConstructor cnstr = CtNewConstructor.defaultConstructor(c);
                 c.addConstructor(cnstr);
 
@@ -66,16 +67,7 @@ public abstract class UninvitedVisitor<T> {
 
                 dispatcher = ((Class<Dispatcher<T>>) c.toClass()).newInstance();
                 dispatcherMap.put(clazz, dispatcher);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            } catch (CannotCompileException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
+            } catch (NotFoundException | CannotCompileException | IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
@@ -84,7 +76,7 @@ public abstract class UninvitedVisitor<T> {
     }
 
     public abstract void visit(T at);
-    public void inviteYourself(T at) {
+    public final void inviteYourself(T at) {
         dispatcher.dispatch(this, at);
     }
 }

@@ -67,7 +67,7 @@ public class Test {
         }
 
         System.gc();
-        Thread.sleep(2000);
+        Thread.sleep(4000);
 
         start = System.nanoTime();
         for (int i = 0; i < 10000; i++) {
