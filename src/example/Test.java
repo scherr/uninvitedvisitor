@@ -48,8 +48,6 @@ public class Test {
     }
 
     public static void main(String args[]) throws InterruptedException {
-        // CtClass.debugDump = "/Users/Max/Desktop/";
-
         Exp e = new Exp.IntExp(0);
         for (int i = 1; i < 100; i++) {
             e = new Exp.AddExp(e, new Exp.IntExp(i));
